@@ -1,0 +1,7 @@
+configuration {
+    show-icons: true;
+    display-dmenu: "";
+}
+
+@theme "./theme.rasi"
+

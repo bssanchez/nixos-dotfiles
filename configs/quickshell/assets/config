@@ -1,0 +1,118 @@
+{
+  "layer": "top",
+  "width": 1900,
+  "margin-top": 10,
+  "margn-bottom": 0,
+  "modules-left": [
+    "custom/launcher",
+    "cpu",
+    "memory",
+    "disk",
+    "custom/topram"
+  ],
+  "modules-center": [
+    "hyprland/workspaces"
+  ],
+  "modules-right": [
+    "tray",
+    "network",
+    "custom/volume",
+    "clock",
+    "custom/idle-toggle",
+    "custom/power"
+  ],
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "on-click": "activate",
+    "all-outputs": true,
+    "active-only": false,
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": [],
+      "6": [],
+      "7": []
+    },
+    "format": "{icon}",
+    "format-icons": {
+      "active": "<span font='12'>󰮯</span>",
+      "empty": "<span font='8'></span>",
+      "persistent": "󰊠"
+    }
+  },
+  "network": {
+    "tooltip": false,
+    "format-wifi": "<span color='#9ece6a'> </span> {bandwidthDownBits}",
+    "format-ethernet": "",
+    "interval": 1,
+    "on-click": "nm-connection-editor"
+  },
+  "tray": {
+    "icon-size": 14,
+    "spacing": 10
+  },
+  "clock": {
+    "tooltip": true,
+    "interval": 60,
+    "rotate": 0,
+    "format": "{:%I:%M %p - %a, %d %b}",
+    "format-alt": " {:%I:%M %p}  {:%a, %d %b}",
+    "tooltip-format": "<span>{calendar}</span>",
+    "calendar": {
+      "mode": "month",
+      "format": {
+        "months": "<span color='#ff6699'><b>{}</b></span>",
+        "days": "<span color='#cdd6f4'><b>{}</b></span>",
+        "weekdays": "<span color='#7CD37C'><b>{}</b></span>",
+        "today": "<span color='#ffcc66'><b>{}</b></span>"
+      }
+    }
+  },
+  "cpu": {
+    "interval": 15,
+    "format": "<span color='#f7768e'></span> {}%",
+    "max-length": 10
+  },
+  "disk": {
+    "format": "<span color='#e0af68'></span> {used}",
+    "interval": 1
+  },
+  "memory": {
+    "interval": 30,
+    "format": "<span color='#7dcfff'></span> {used}GiB",
+    "max-length": 10
+  },
+
+
+  "custom/volume": {
+    "format": "{}",
+    "interval": 1,
+    "exec": "~/.config/hypr/scripts/pipewire-volume.sh",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+  },
+  "custom/launcher": {
+    "format": " ",
+    "on-click": "rofi -show drun",
+    "on-click-right": "killall rofi"
+  },
+  "custom/power": {
+    "format": "<span color='#f7768e'>⏻</span>",
+    "on-click": "wlogout"
+  },
+  "custom/idle-toggle": {
+    "format": "{}",
+    "exec": "cat ~/.cache/idle_enabled | grep -q enabled && echo '󰒲' || echo '󰒳'",
+    "on-click": "~/.config/hypr/scripts/toggle_idle.sh",
+    "interval": 2,
+    "tooltip": false
+  },
+  "custom/topram": {
+    "exec": "~/.config/hypr/scripts/topram.sh",
+    "interval": 5,
+    "return-type": "json"
+  }
+}
