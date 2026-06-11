@@ -9,6 +9,7 @@ import Quickshell.Wayland
 PanelWindow {
     id: root
 
+    property var sourceMenuHandle: null
     property var menuHandle: null
     property real menuX: 0
     property real menuY: 0
@@ -18,6 +19,7 @@ PanelWindow {
     property var colors: theme.colors
 
     function open(handle, x, y) {
+        sourceMenuHandle = handle;
         menuHandle = handle;
         let width = 240;
         let safeX = x - (width / 2);
@@ -28,6 +30,8 @@ PanelWindow {
     }
 
     function close() {
+        sourceMenuHandle = null;
+        menuHandle = null;
         hasCurrent = false;
     }
 
@@ -72,6 +76,12 @@ PanelWindow {
             bottomRightRadius: 14
 
             QsMenuOpener {
+                id: sourceOpener
+
+                menu: root.sourceMenuHandle
+            }
+
+            QsMenuOpener {
                 id: opener
 
                 menu: root.menuHandle
@@ -88,7 +98,7 @@ PanelWindow {
                 width: parent.width - 16
                 height: 36
                 radius: 8
-                color: root.colors.text
+                color: root.colors.crust
                 opacity: active ? 0.15 : 0
 
                 Behavior on y {
@@ -132,21 +142,23 @@ PanelWindow {
                         width: menuColumn.width
                         height: isSeparator ? 12 : 36
 
+                        // Separator line
                         Rectangle {
                             visible: isSeparator
                             anchors.centerIn: parent
                             width: parent.width - 16
                             height: 1
-                            color: root.colors.base
+                            color: root.colors.surface0
                             opacity: 0.5
                         }
 
+                        // Highlight mark
                         Rectangle {
                             visible: !isSeparator && highlight.active && highlight.targetY === menuItem.y
                             width: 3
                             height: 16
                             radius: 2
-                            color: root.colors.text
+                            color: root.colors.mauve
                             anchors.left: parent.left
                             anchors.leftMargin: 4
                             anchors.verticalCenter: parent.verticalCenter
@@ -174,8 +186,8 @@ PanelWindow {
 
                                     layer.effect: ColorOverlay {
                                         color: (highlight.active && highlight.targetY === menuItem.y)
-                                        ? root.colors.sapphire || "black"
-                                        : root.colors.surface1 || "black"
+                                        ? root.colors.text
+                                        : root.colors.subtext0
                                     }
 
                                 }
@@ -184,11 +196,9 @@ PanelWindow {
                                     anchors.centerIn: parent
                                     visible: !(modelData.icon !== undefined && modelData.icon !== "")
                                     text: ""
-                                    font.family: "Symbols Nerd Font"
+                                    font.family: theme.fontFamily
                                     font.pixelSize: 6
-                                    color: (highlight.active && highlight.targetY === menuItem.y)
-                                    ? root.colors.surface0 || "black"
-                                    : root.colors.surface1 || "black"
+                                    color: "transparent"
                                 }
 
                             }
@@ -196,13 +206,8 @@ PanelWindow {
                             Text {
                                 text: modelData.text || ""
                                 color: (highlight.active && highlight.targetY === menuItem.y)
-                                ? root.colors.surface0 || "black"
-                                : Qt.rgba(
-                                Qt.color(root.colors.surface0 || "#000000").r,
-                                Qt.color(root.colors.surface0 || "#000000").g,
-                                Qt.color(root.colors.surface0 || "#000000").b,
-                                0.8
-                                )
+                                ? root.colors.text
+                                : root.colors.subtext0
                                 Layout.fillWidth: true
                                 elide: Text.ElideRight
                                 font.pixelSize: 13
@@ -213,8 +218,8 @@ PanelWindow {
 
                             Text {
                                 visible: (modelData.checkable && modelData.checked) || menuItem.hasChildren
-                                text: menuItem.hasChildren ? "" : ""
-                                font.family: "Symbols Nerd Font"
+                                text: menuItem.hasChildren ? "" : ""
+                                font.family: theme.fontFamily
                                 color: root.colors.text
                                 font.pixelSize: 12
                             }
@@ -245,13 +250,9 @@ PanelWindow {
                                 }
                             }
                         }
-
                     }
-
                 }
-
             }
-
         }
 
         Behavior on implicitHeight {

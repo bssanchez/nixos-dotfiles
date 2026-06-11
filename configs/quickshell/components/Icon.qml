@@ -7,7 +7,7 @@ Text {
     property string icon: ""
 
     text: icon
-    font.family: "FiraCode Nerd Font"
+    font.family: theme.fontFamily
     font.pixelSize: 16
     Layout.alignment: Qt.AlignBaseline
     verticalAlignment: Text.AlignVCenter

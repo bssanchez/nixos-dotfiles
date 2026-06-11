@@ -47,6 +47,7 @@
   time.timeZone = "America/Bogota";
 
   i18n.defaultLocale = "es_CO.UTF-8";
+  i18n.extraLocales = [ "en_US.UTF-8/UTF-8" "ja_JP.UTF-8/UTF-8" ];
   console.keyMap = "la-latin1";
 
   # ------------------------------------------------------------------------- #
@@ -156,11 +157,17 @@
   # List of enabled programs
 
   fonts.packages = with pkgs; [
+    corefonts
     nerd-fonts.fira-code
     nerd-fonts.fira-mono
     nerd-fonts.droid-sans-mono
     nerd-fonts.caskaydia-cove
     nerd-fonts.victor-mono
+
+    noto-fonts
+    noto-fonts-cjk-sans 
+    noto-fonts-cjk-serif
+    noto-fonts-color-emoji
   ];
 
   programs.zsh.enable = true;

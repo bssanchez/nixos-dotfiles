@@ -86,6 +86,7 @@
 
     pcmanfm
     nwg-look
+    onlyoffice-desktopeditors
 
     (pkgs.writeShellApplication {
       name = "nix-search";

@@ -1,18 +1,18 @@
-@import "./themes/catppuccin-mocha"
+@import "./themes/catppuccin-mocha-lavender"
 
 * {
-    font:   "Fira Code Nerd Font 12";
+    font:   "FiraCode Nerd Font 12";
 
     bg0:    @base; // #242424E6;
-    bg1:    #7E7E7E80;
-    bg2:    #D41919E6;
+    bg1:    @subtext1;
+    bg2:    @peach;
 
-    fg0:    #fdf6e3;
-    fg1:    #FFFFFF;
-    fg2:    #93a1a180;
+    fg0:    @subtext0;
+    fg1:    @crust;
+    fg2:    @subtext1;
 
     background-color:   transparent;
-    text-color:         @fg0;
+    text-color:         @text;
 
     margin:     0;
     padding:    0;
@@ -28,7 +28,7 @@ window {
 }
 
 inputbar {
-    font:       "Fira Code Nerd Font 20";
+    font:       "FiraCode Nerd Font 20";
     padding:    12px;
     spacing:    12px;
     children:   [ entry ];

@@ -70,6 +70,8 @@ PanelWindow {
             spacing: 10
 
             SystemTray { }
+
+            Clock {}
         }
     }
 }
