@@ -62,6 +62,9 @@
     gnumake
     wf-recorder
     nixfmt
+    bluetui
+    slack
+    claude-code
 
     glib
     dconf

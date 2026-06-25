@@ -153,6 +153,11 @@
 
   security.polkit.enable = true;
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+
   # ------------------------------------------------------------------------- #
   # List of enabled programs
 
