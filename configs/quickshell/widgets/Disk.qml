@@ -48,10 +48,11 @@ Item {
     ListModel {
         id: partitionsModel
 
-        ListElement { mount: "/"; used: "--"; total: "--"; usedPercent: 0; freePercent: 100; available: false }
-        ListElement { mount: "/tmp"; used: "--"; total: "--"; usedPercent: 0; freePercent: 100; available: false }
-        ListElement { mount: "/srv"; used: "--"; total: "--"; usedPercent: 0; freePercent: 100; available: false }
+        // En NixOS / es tmpfs; los FS reales están en /nix (sistema), /home, /srv.
+        ListElement { mount: "/nix"; used: "--"; total: "--"; usedPercent: 0; freePercent: 100; available: false }
         ListElement { mount: "/home"; used: "--"; total: "--"; usedPercent: 0; freePercent: 100; available: false }
+        ListElement { mount: "/srv"; used: "--"; total: "--"; usedPercent: 0; freePercent: 100; available: false }
+        ListElement { mount: "/boot"; used: "--"; total: "--"; usedPercent: 0; freePercent: 100; available: false }
     }
 
     Process {
@@ -59,7 +60,7 @@ Item {
         command: [
             "sh",
             "-c",
-            "for p in / /tmp /srv /home; do " +
+            "for p in /nix /home /srv /boot; do " +
             "if [ -e \"$p\" ]; then " +
             "df -hP \"$p\" | awk -v path=\"$p\" 'NR==2 {print path\"|\"$3\"|\"$2\"|\"$5}'; " +
             "else echo \"$p|N/A|N/A|N/A\"; " +
@@ -89,7 +90,7 @@ Item {
 
                     diskWidget.updatePartition(mount, used, total, usedPercent, available);
 
-                    if (mount === "/") {
+                    if (mount === "/nix") {
                         diskWidget.rootUsageText = available ? (used + " / " + total) : "-- / --";
                         diskWidget.rootUsedPercent = usedPercent;
                     }
@@ -98,7 +99,13 @@ Item {
         }
     }
 
-    Component.onCompleted: diskInfoProc.running = true
+    Timer {
+        interval: 30000
+        running: true
+        repeat: true
+        onTriggered: diskInfoProc.running = true
+        Component.onCompleted: diskInfoProc.running = true
+    }
 
     Timer {
         id: hidePopoverTimer

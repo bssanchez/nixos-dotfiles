@@ -1,4 +1,10 @@
-{ config, pkgs, ... } : {
+{ config, pkgs, ... }:
+let
+  # Ruta real del repo. `link` crea symlinks *fuera del store* apuntando
+  # directo a estos archivos: son editables en vivo y no requieren rebuild.
+  dotfiles = "${config.home.homeDirectory}/.nix-dotfiles/configs";
+  link = config.lib.file.mkOutOfStoreSymlink;
+in {
   imports = [
     ./terminal/zsh.nix
     ./terminal/utils.nix
@@ -28,14 +34,22 @@
     "Kvantum/catppuccin-mocha-lavender".source = "${pkgs.catppuccin-kvantum.override { variant = "mocha"; accent = "lavender"; }}/share/Kvantum/catppuccin-mocha-lavender";
     "Kvantum/catppuccin-latte-lavender".source = "${pkgs.catppuccin-kvantum.override { variant = "latte"; accent = "lavender"; }}/share/Kvantum/catppuccin-latte-lavender";
 
-  #   "hypr".source = ./_config/hypr;
-  #   "kitty".source = ./_config/kitty;
-  #   "quickshell".source = ./_config/quickshell;
-  #   "tmux".source = ./_config/tmux;
-  #   # "nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nix-dotfiles/modules/_config/nvim";
+    # Symlinks directos al repo (editables sin rebuild).
+    "hypr".source = link "${dotfiles}/hypr";
+    "kitty".source = link "${dotfiles}/kitty";
+    "quickshell".source = link "${dotfiles}/quickshell";
+    "rofi".source = link "${dotfiles}/rofi";
+    "mako".source = link "${dotfiles}/mako";
+    "nvim".source = link "${dotfiles}/nvim";
   };
 
-  # home.file.".tmux.conf".source = ./_config/tmux.conf;
+  home.file = {
+    ".tmux.conf".source = link "${dotfiles}/tmux.conf";
+    ".local/bin/wallpaper-rotate.sh".source = link "${dotfiles}/local-bins/wallpaper-rotate.sh";
+    ".local/bin/theme-switcher.sh".source = link "${dotfiles}/local-bins/theme-switcher.sh";
+    ".local/bin/byzanz-gui".source = link "${dotfiles}/local-bins/byzanz-gui";
+    ".local/bin/byzanz-gui-region".source = link "${dotfiles}/local-bins/byzanz-gui-region";
+  };
 
 
   home.packages = with pkgs; [
@@ -65,6 +79,9 @@
     bluetui
     slack
     claude-code
+    wiremix
+    vlc
+    rar
 
     glib
     dconf

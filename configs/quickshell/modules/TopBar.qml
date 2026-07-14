@@ -71,7 +71,13 @@ PanelWindow {
 
             SystemTray { }
 
+            Battery {}
+
+            Volume {}
+
             Clock {}
+
+            Notifications {}
         }
     }
 }

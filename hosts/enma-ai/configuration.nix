@@ -93,8 +93,10 @@
     curl
     git
     kitty
-    hyprpaper
+    awww
     quickshell
+    mako
+    libnotify
   ];
 
   xdg.portal = {
@@ -176,6 +178,11 @@
   ];
 
   programs.zsh.enable = true;
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+  };
 
   programs.hyprland = {
     enable = true;
