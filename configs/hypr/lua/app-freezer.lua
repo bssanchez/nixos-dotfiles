@@ -38,6 +38,6 @@ hl.window_rule({
 	name = "paused-rules",
 	match = { tag = "paused" },
 
-	opacity = "0.40 override",
+	opacity = "0.80 override",
 	border_color = "rgb(FF0000) rgb(880808)",
 })

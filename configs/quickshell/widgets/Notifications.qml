@@ -68,12 +68,14 @@ Item {
     // Proceso para acciones (limpiar / descartar).
     Process { id: actionProc }
 
-    // Refresco mientras el panel está abierto, para ver notificaciones nuevas.
+    // Refresco continuo para mantener el contador de la barra al día,
+    // más rápido mientras el panel está abierto para ver las nuevas al instante.
     Timer {
-        interval: 2000
+        interval: root.panelOpen ? 1000 : 3000
         repeat: true
-        running: root.panelOpen
+        running: true
         onTriggered: root.refresh()
+        Component.onCompleted: root.refresh()
     }
 
     // Pastilla con la campana en la barra

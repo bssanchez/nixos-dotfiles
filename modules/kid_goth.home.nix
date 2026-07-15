@@ -1,7 +1,5 @@
-{ config, pkgs, ... }:
+{ config, pkgs, gazelle, ... }:
 let
-  # Ruta real del repo. `link` crea symlinks *fuera del store* apuntando
-  # directo a estos archivos: son editables en vivo y no requieren rebuild.
   dotfiles = "${config.home.homeDirectory}/.nix-dotfiles/configs";
   link = config.lib.file.mkOutOfStoreSymlink;
 in {
@@ -16,6 +14,12 @@ in {
   home.username = "kid_goth";
   home.homeDirectory = "/home/kid_goth";
   home.stateVersion = "25.11";
+
+  catppuccin = {
+    enable = true;
+    autoEnable = false;
+    flavor = "mocha";
+  };
 
   home.sessionVariables = {
     XDG_DATA_DIRS = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}:${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}:$XDG_DATA_DIRS";
@@ -34,13 +38,14 @@ in {
     "Kvantum/catppuccin-mocha-lavender".source = "${pkgs.catppuccin-kvantum.override { variant = "mocha"; accent = "lavender"; }}/share/Kvantum/catppuccin-mocha-lavender";
     "Kvantum/catppuccin-latte-lavender".source = "${pkgs.catppuccin-kvantum.override { variant = "latte"; accent = "lavender"; }}/share/Kvantum/catppuccin-latte-lavender";
 
-    # Symlinks directos al repo (editables sin rebuild).
+    # Direct symlinks dotfiles
     "hypr".source = link "${dotfiles}/hypr";
     "kitty".source = link "${dotfiles}/kitty";
     "quickshell".source = link "${dotfiles}/quickshell";
     "rofi".source = link "${dotfiles}/rofi";
     "mako".source = link "${dotfiles}/mako";
     "nvim".source = link "${dotfiles}/nvim";
+    "git/ignore".source = link "${dotfiles}/git/ignore";
   };
 
   home.file = {
@@ -51,6 +56,11 @@ in {
     ".local/bin/byzanz-gui-region".source = link "${dotfiles}/local-bins/byzanz-gui-region";
   };
 
+  # direnv + nix-direnv: (flake.nix / .envrc)
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
 
   home.packages = with pkgs; [
     tmux
@@ -77,11 +87,14 @@ in {
     wf-recorder
     nixfmt
     bluetui
+    gazelle.packages.${pkgs.stdenv.hostPlatform.system}.default
     slack
     claude-code
     wiremix
     vlc
     rar
+    zip
+    nomacs
 
     glib
     dconf

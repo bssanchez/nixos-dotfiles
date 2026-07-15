@@ -193,12 +193,14 @@
     enable = true;
     indicator = true;
   };
- 
+
   # virtualisation.docker.docker = enable;
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   virtualisation.docker.rootless = {
     enable = true;
     setSocketVariable = true;
   };
+
   systemd.user.services.docker = {
     enable = true;
     wantedBy = lib.mkForce [ ];
@@ -208,9 +210,27 @@
   # ------------------------------------------------------------------------- #
   # The end?
   nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+
+    # Optimizations
+    substituters = [
+      "https://cache.nixos.org"
+      "https://nix-community.cachix.org"
+    ];
+    trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+
+    max-jobs = 4;
+    cores = 0;
+
+    http-connections = 50;
+    auto-optimise-store = true;
+  };
   system.stateVersion = "25.11"; # Initial install state 20260402
 }

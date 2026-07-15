@@ -466,7 +466,7 @@ hl.window_rule({
 
 hl.window_rule({
 	name = "floating-apps",
-	match = { class = "^(kitty|fileroller|galculator|zoom|org\\.gnome\\.FileRoller)$" },
+	match = { class = "^(fileroller|galculator|zoom|org\\.gnome\\.FileRoller)$" },
 
 	float = true,
 	center = true,

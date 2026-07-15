@@ -7,4 +7,8 @@
     enableZshIntegration = true;
     shellWrapperName = "y";
   };
+
+  programs.fastfetch = {
+    enable = true;
+  };
 }
