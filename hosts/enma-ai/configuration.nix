@@ -23,6 +23,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.tmp.useTmpfs = true;
+  systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp";
+
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"
@@ -154,6 +157,8 @@
   services.devmon.enable = true;
 
   security.polkit.enable = true;
+
+  security.pam.services.hyprlock = {};
 
   hardware.bluetooth = {
     enable = true;

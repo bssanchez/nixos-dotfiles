@@ -47,7 +47,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("awww-daemon")
 	hl.exec_cmd("~/.local/bin/wallpaper-rotate.sh")
 	-- hl.exec_cmd("udiskie --tray --no-notify")
-	-- hl.exec_cmd("hypridle")
+	hl.exec_cmd("hypridle")
 	hl.exec_cmd("mako")
 	hl.exec_cmd("wl-paste --type text --watch cliphist store")
 	hl.exec_cmd("wl-paste --image --watch cliphist store")
@@ -293,7 +293,8 @@ hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit")) -- dwindle only
 hl.bind(mainMod .. " + M", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
-hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("killall wlogout; wlogout"))
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/powermenu.sh"))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
 
 -- Move window in the screen with mainMod + CTR + arrow keys
 hl.bind(mainMod .. " + CTRL + left", hl.dsp.window.move({ direction = "left" }))

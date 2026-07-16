@@ -125,6 +125,13 @@ Item {
         popoverVisible = true;
     }
 
+    function togglePopover() {
+        if (popoverVisible)
+            popoverVisible = false;
+        else
+            showPopover();
+    }
+
     function schedulePopoverHide() {
         if (!hoverArea.containsMouse && !popoverHovered) {
             hidePopoverTimer.restart();
@@ -169,7 +176,8 @@ Item {
             id: hoverArea
             anchors.fill: parent
             hoverEnabled: true
-            onEntered: root.showPopover()
+            cursorShape: Qt.PointingHandCursor
+            onClicked: root.togglePopover()
             onExited: root.schedulePopoverHide()
         }
     }
@@ -186,17 +194,20 @@ Item {
 
         WlrLayershell.layer: WlrLayer.Overlay
 
-        visible: root.popoverVisible
+        visible: root.popoverVisible || contentWrapper.opacity > 0.01
         implicitWidth: 390
-        implicitHeight: root.popoverVisible ? calendar.popoverHeight : 0
+        implicitHeight: calendar.popoverHeight
         color: "transparent"
 
-        Behavior on implicitHeight {
-            NumberAnimation {
-                duration: 80
-                easing.type: Easing.OutCubic
-            }
-        }
+        Item {
+            id: contentWrapper
+            anchors.fill: parent
+            transformOrigin: Item.Top
+            opacity: root.popoverVisible ? 1 : 0
+            scale: root.popoverVisible ? 1 : 0.92
+
+            Behavior on opacity { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
+            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
 
         Popout {
             id: popoverContent
@@ -527,6 +538,7 @@ Item {
                     }
                 }
             }
+        }
         }
     }
 }

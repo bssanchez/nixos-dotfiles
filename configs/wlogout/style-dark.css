@@ -1,0 +1,29 @@
+/* wlogout — Catppuccin Mocha (dark) */
+
+* {
+    font-family: "FiraCode Nerd Font", monospace;
+    background-image: none;
+    box-shadow: none;
+    text-shadow: none;
+    transition: background-color 150ms ease;
+    outline: none;
+}
+
+window {
+    background-color: rgba(17, 17, 27, 0.80);
+}
+
+button {
+    color: #cdd6f4;
+    font-size: 46px;
+    background-color: rgba(49, 50, 68, 0.35);
+    border: 1px solid rgba(69, 71, 90, 0.55);
+    border-radius: 20px;
+    margin: 14px;
+    padding-bottom: 25px;
+}
+
+button:hover,
+button:focus {
+    background-color: rgba(69, 71, 90, 0.92);
+}

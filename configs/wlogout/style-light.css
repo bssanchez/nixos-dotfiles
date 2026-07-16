@@ -1,0 +1,29 @@
+/* wlogout — Catppuccin Latte (light) */
+
+* {
+    font-family: "FiraCode Nerd Font", monospace;
+    background-image: none;
+    box-shadow: none;
+    text-shadow: none;
+    transition: background-color 150ms ease;
+    outline: none;
+}
+
+window {
+    background-color: rgba(220, 224, 232, 0.80);
+}
+
+button {
+    color: #4c4f69;
+    font-size: 46px;
+    background-color: rgba(204, 208, 218, 0.40);
+    border: 1px solid rgba(188, 192, 204, 0.65);
+    border-radius: 20px;
+    margin: 14px;
+    padding-bottom: 25px;
+}
+
+button:hover,
+button:focus {
+    background-color: rgba(188, 192, 204, 0.95);
+}

@@ -62,6 +62,13 @@ Item {
         refresh();
     }
 
+    function togglePopover() {
+        if (popoverVisible)
+            popoverVisible = false;
+        else
+            showPopover();
+    }
+
     function schedulePopoverHide() {
         if (!triggerHover.hovered && !popoverHovered)
             hidePopoverTimer.restart();
@@ -189,7 +196,11 @@ Item {
         HoverHandler {
             id: triggerHover
             cursorShape: Qt.PointingHandCursor
-            onHoveredChanged: hovered ? root.showPopover() : root.schedulePopoverHide()
+            onHoveredChanged: if (!hovered) root.schedulePopoverHide()
+        }
+
+        TapHandler {
+            onTapped: root.togglePopover()
         }
     }
 
@@ -209,20 +220,20 @@ Item {
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.namespace: "quickshell-connectivity"
 
-        visible: root.popoverVisible
+        visible: root.popoverVisible || contentWrapper.opacity > 0.01
         implicitWidth: 380
-        implicitHeight: root.popoverVisible ? (contentCol.implicitHeight + 40) : 0
+        implicitHeight: contentCol.implicitHeight + 40
         color: "transparent"
 
-        Behavior on implicitHeight {
-            NumberAnimation {
-                duration: 110
-                easing.type: Easing.OutCubic
-            }
-        }
-
         Item {
+            id: contentWrapper
             anchors.fill: parent
+            transformOrigin: Item.Top
+            opacity: root.popoverVisible ? 1 : 0
+            scale: root.popoverVisible ? 1 : 0.92
+
+            Behavior on opacity { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
+            Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
 
             // Mantiene el popout abierto mientras el cursor está sobre él (incl. el borde).
             HoverHandler {

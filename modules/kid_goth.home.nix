@@ -45,6 +45,7 @@ in {
     "rofi".source = link "${dotfiles}/rofi";
     "mako".source = link "${dotfiles}/mako";
     "nvim".source = link "${dotfiles}/nvim";
+    "wlogout".source = link "${dotfiles}/wlogout";
     "git/ignore".source = link "${dotfiles}/git/ignore";
   };
 
@@ -63,63 +64,83 @@ in {
   };
 
   home.packages = with pkgs; [
-    tmux
-    neovim
+    bottom
+    bluetui
     brave
+
+    claude-code
+
+    dconf
     duf
-    vscode-fhs
-    rofi
+
+    eza
+
+    file-roller
+
+    gazelle.packages.${pkgs.stdenv.hostPlatform.system}.default
+    gcc
+    glib
+    gnumake
+    grim
+    gsettings-desktop-schemas
     gtk3
     gtk4
-    file-roller
-    eza
-    unzip
-    nodejs
-    python3
-    grim
-    hicolor-icon-theme
-    ripgrep
-    lazygit
-    bottom
-    tree-sitter
-    gcc
-    gnumake
-    wf-recorder
-    nixfmt
-    bluetui
-    gazelle.packages.${pkgs.stdenv.hostPlatform.system}.default
-    slack
-    claude-code
-    wiremix
-    vlc
-    rar
-    zip
-    nomacs
 
-    glib
-    dconf
-    gsettings-desktop-schemas
-  
-    libsForQt5.qtstyleplugin-kvantum
+    hicolor-icon-theme
+    hypridle
+    hyprlock
+
+    kdePackages.qt6ct
+    kdePackages.qt5compat
+    kdePackages.qtstyleplugin-kvantum
+    kdePackages.qtsvg
+    kdePackages.qtwayland
+
+    lazygit
     libsForQt5.qt5ct
+    libsForQt5.qtstyleplugin-kvantum
     libsForQt5.qtwayland
 
-    kdePackages.qtstyleplugin-kvantum
-    kdePackages.qt6ct
-    kdePackages.qtwayland
-    kdePackages.qtsvg
-    kdePackages.qt5compat
-    
+    neovim
+    nixfmt
+    nodejs
+    nomacs
+    nwg-look
+
+    onlyoffice-desktopeditors
+
     papirus-icon-theme
+    pcmanfm
+    python3
+
+    rar
+    ripgrep
+    rofi
+    rustdesk
+
+    slack
+
+    tmux
+    transmission_4-qt
+    tree-sitter
+
+    unzip
+
+    vlc
+    vscode-fhs
+
+    wf-recorder
+    wiremix
+    wlogout
+
+    yt-dlp
+    
+    zip
+    
     (catppuccin-gtk.override { variant = "mocha"; accents = [ "lavender" ]; })
     (catppuccin-gtk.override { variant = "latte"; accents = [ "lavender" ]; })
-
     (catppuccin-kvantum.override { variant = "mocha"; accent = "lavender"; })
     (catppuccin-kvantum.override { variant = "latte"; accent = "lavender"; })
-
-    pcmanfm
-    nwg-look
-    onlyoffice-desktopeditors
 
     (pkgs.writeShellApplication {
       name = "nix-search";

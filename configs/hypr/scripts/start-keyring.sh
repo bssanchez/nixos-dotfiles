@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Start D-Bus if not running
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then

@@ -77,7 +77,11 @@ PanelWindow {
 
             Clock {}
 
+            LockToggle {}
+
             Notifications {}
+
+            PowerMenu {}
         }
     }
 }
