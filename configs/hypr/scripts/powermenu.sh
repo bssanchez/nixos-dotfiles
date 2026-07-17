@@ -8,13 +8,12 @@ fi
 CSS="$HOME/.local/state/theme/wlogout.css"
 [ -f "$CSS" ] || CSS="$HOME/.config/wlogout/style-dark.css"
 
-COLS=6      # buttons per row
+COLS=6 # buttons per row
 ROWS=1
-BW=150      # button width
-BH=150      # button height
-GAP=18      # separation between buttons
+BW=150 # button width
+BH=150 # button height
+GAP=18 # separation between buttons
 
-# Margins to center a compact grid on the active monitor (respects the scale).
 read -r MON_W MON_H < <(
     hyprctl -j monitors 2>/dev/null | python3 -c '
 import json,sys

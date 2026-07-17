@@ -6,7 +6,7 @@ import Quickshell.Io
 
 Item {
     id: volumeWidget
-    width: 74
+    width: 78
     height: 34
 
     property int volume: 0
@@ -35,7 +35,6 @@ Item {
         }
     }
 
-    // Proceso para aplicar cambios (mute / subir / bajar), igual que tus binds de Hyprland.
     Process { id: setProc }
 
     Timer {
@@ -46,7 +45,6 @@ Item {
         Component.onCompleted: volumeProc.running = true
     }
 
-    // Refresco rápido tras interactuar, para no esperar al poll de 1s.
     Timer {
         id: quickRefresh
         interval: 60
@@ -67,17 +65,16 @@ Item {
                 text: volumeWidget.volumeIcon()
                 color: volumeWidget.muted ? (theme.colors.overlay0 || "gray") : (theme.colors.sky || "white")
                 font.family: theme.fontFamily
-                font.pixelSize: 16
+                font.pixelSize: 15
             }
 
             Text {
                 text: volumeWidget.muted ? "Mute" : (volumeWidget.volume + "%")
                 color: theme.colors.text || "black"
-                font.pixelSize: 14
+                font.pixelSize: 15
             }
         }
 
-        // Clic izq = silenciar/activar; clic der = abrir mezclador wiremix; rueda = ±5%.
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton

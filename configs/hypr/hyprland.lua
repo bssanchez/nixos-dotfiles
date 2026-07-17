@@ -111,7 +111,7 @@ hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 hl.config({
 	general = {
 		gaps_in = 5,
-		gaps_out = 10,
+		gaps_out = 5,
 
 		border_size = 2,
 
@@ -375,6 +375,7 @@ hl.bind(
 )
 hl.bind("SHIFT + Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | swappy -f -'))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("qs ipc call visualizer toggle"))
 hl.bind(mainMod .. " + ALT + up", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"))
 hl.bind(mainMod .. " + ALT + down", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-"))
 hl.bind(mainMod .. " + C", hl.dsp.window.center())

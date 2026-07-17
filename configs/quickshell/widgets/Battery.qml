@@ -17,11 +17,9 @@ Item {
     readonly property bool charging: status === "Charging" || status === "Full"
     readonly property bool discharging: status === "Discharging"
 
-    // Control de avisos: se disparan una sola vez por cruce de umbral.
     property bool warnedLow: false
     property bool warnedCritical: false
 
-    // Estado del banner de aviso.
     property string alertLevel: "low"
     property bool alertVisible: false
 
@@ -49,7 +47,6 @@ Item {
     }
 
     function evaluateAlerts() {
-        // Mientras carga (o está lleno) no avisamos y reiniciamos los flags.
         if (!discharging) {
             warnedLow = false;
             warnedCritical = false;
@@ -65,7 +62,6 @@ Item {
             showAlert("low");
         }
 
-        // Histéresis: al recuperar carga por encima del umbral, permite volver a avisar.
         if (level > 20) warnedLow = false;
         if (level > 8)  warnedCritical = false;
     }
@@ -101,7 +97,6 @@ Item {
         onTriggered: batteryWidget.alertVisible = false
     }
 
-    // Pastilla en la barra
     Rectangle {
         anchors.fill: parent
         color: theme.colors.crust || "black"
@@ -115,18 +110,17 @@ Item {
                 text: batteryWidget.batteryIcon()
                 color: batteryWidget.batteryColor()
                 font.family: theme.fontFamily
-                font.pixelSize: 16
+                font.pixelSize: 15
             }
 
             Text {
                 text: batteryWidget.level + "%"
                 color: theme.colors.text || "black"
-                font.pixelSize: 14
+                font.pixelSize: 15
             }
         }
     }
 
-    // Banner de aviso (sin depender de notify-send / daemon de notificaciones)
     PanelWindow {
         anchors { top: true }
         margins { top: 50 }
@@ -170,7 +164,7 @@ Item {
                     spacing: 2
 
                     Text {
-                        text: batteryWidget.alertLevel === "critical" ? "¡Batería crítica!" : "Batería baja"
+                        text: batteryWidget.alertLevel === "critical" ? "¡Battery is dying!" : "Battery Low"
                         color: theme.colors.text || "white"
                         font.family: theme.fontFamily
                         font.bold: true

@@ -68,6 +68,7 @@ in {
     bluetui
     brave
 
+    cava
     claude-code
 
     dconf
@@ -119,6 +120,7 @@ in {
     rustdesk
 
     slack
+    slurp
 
     tmux
     transmission_4-qt
