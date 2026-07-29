@@ -7,6 +7,7 @@ import "../widgets"
 
 PanelWindow {
     id: topBar
+    screen: modelData
     implicitHeight: 40
     anchors {
         top: true
@@ -60,7 +61,9 @@ PanelWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
 
-            Workspaces {}
+            Workspaces {
+                monitorName: topBar.screen?.name ?? ""
+            }
         }
 
         RowLayout {

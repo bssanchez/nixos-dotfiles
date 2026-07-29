@@ -14,18 +14,28 @@ ShellRoot {
 
     Theme { id: theme }
 
-    Loader {
-        active: true
-        id: topBarLoader
+    readonly property var primaryScreen:
+        Quickshell.screens.find(
+            s => s.name.startsWith("eDP") || 
+            s.name.startsWith("LVDS")
+        ) ?? Quickshell.screens[0]
 
-        sourceComponent: TopBar { id: topBar }
+    Variants {
+        model: Quickshell.screens
+
+        TopBar {
+            required property var modelData
+            screen: modelData
+        }
     }
 
     Loader {
         active: true
         id: visualizerLoader
 
-        sourceComponent: MediaVisualizer {}
+        sourceComponent: MediaVisualizer {
+            targetScreen: root.primaryScreen
+        }
     }
 
     IpcHandler {

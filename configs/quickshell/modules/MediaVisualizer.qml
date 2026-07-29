@@ -9,6 +9,9 @@ import Quickshell.Services.Mpris
 PanelWindow {
     id: visualizer
 
+    property var targetScreen
+    screen: targetScreen
+
     anchors {
         left: true
         right: true

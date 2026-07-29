@@ -131,6 +131,7 @@ in {
     vlc
     vscode-fhs
 
+    wdisplays
     wf-recorder
     wiremix
     wlogout
