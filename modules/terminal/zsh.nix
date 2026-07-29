@@ -80,8 +80,8 @@
     enable = true;
     enableZshIntegration = true;
     defaultCommand = "fd --type f --hidden --follow --exclude .git";
-    fileWidgetCommand = "fd --type f --hidden --follow --exclude .git";
-    changeDirWidgetCommand = "fd --type d --hidden --follow --exclude .git";
+    fileWidget.command = "fd --type f --hidden --follow --exclude .git";
+    changeDirWidget.command = "fd --type d --hidden --follow --exclude .git";
   };
 
   home.packages = with pkgs; [ fd ];
