@@ -28,7 +28,7 @@
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
 ```bash
 # Clone
@@ -45,7 +45,7 @@ nix run home-manager -- switch --flake ~/.nix-dotfiles#kid_goth
 
 ---
 
-## 🎨 Theme Switching
+## Theme Switching
 
 ```bash
 # Toggle between Catppuccin Mocha (dark) and Latte (light)
@@ -66,7 +66,7 @@ This single script propagates the theme change to:
 
 ---
 
-## ⌨️ Keybindings (SUPER = Windows key)
+## Keybindings (SUPER = Windows key)
 
 | Key | Action |
 |-----|--------|
@@ -91,6 +91,6 @@ This single script propagates the theme change to:
 
 ---
 
-## 📜 License
+## License
 
 MIT — use it, break it, fix it, share it.
