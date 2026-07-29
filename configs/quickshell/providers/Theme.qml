@@ -10,7 +10,7 @@ Item {
 
     property var colors: JSON.parse(jsonTheme.text() || "{}")
 
-    readonly property string fontFamily: "FiraCode Nerd Font"
+    readonly property string fontFamily: "FiraCode Nerd Font Mono"
 
     FileView {
         id: jsonTheme

@@ -1,16 +1,16 @@
 { pkgs, ... }: {
-  
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    
+
     shellAliases = {
       docker_clean_images = "docker rmi '$(docker images a --filter=dangling=tru -q)'";
       vim = "nvim";
       dotfiles = "nvim ~/.nix-dotfiles";
-      
+
       nix-switch = "sudo nixos-rebuild switch --flake ~/.nix-dotfiles#$(hostname)";
       nix-test = "sudo nixos-rebuild test --flake ~/.nix-dotfiles#$(hostname)";
       nix-clean = "sudo nix-collect-garbage -d";
@@ -22,38 +22,68 @@
     localVariables = {
       EDITOR = "nvim";
       BROWSER = "brave";
-      
+
       LC_ALL = "es_CO.UTF-8";
       LANG = "es_CO.UTF-8";
-      
+
       DIFFPROG = "delta";
-      
-      # LSCOLORS = "exfxcxdxbxbxbxbxbxbxbx";
-      # LS_COLORS = "di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=31;40:cd=31;40:su=31;40:sg=31;40:tw=31;40:ow=31;40:";
     };
 
     initContent = ''
+    # Versión de node en el prompt, solo en proyectos; nunca ejecuta node.
+    # nixpkgs -> lee la versión de la ruta del store; con nvm -> de $NVM_BIN; si no, del .nvmrc.
+    node_prompt_info() {
+      [[ -f package.json ]] || return
+      local ver np=''${commands[node]}
+      if [[ $NVM_BIN == */versions/node/* ]]; then
+        ver=''${''${NVM_BIN#*/versions/node/}%%/*}
+      elif [[ $np == *nodejs-*/bin/node ]]; then
+        ver=v''${''${np##*nodejs-}%%/*}
+      elif [[ -r .nvmrc ]]; then
+        ver=v''${$(<.nvmrc)#v}
+      fi
+      [[ -n $ver ]] && echo " %F{green}󰎙 %F{cyan}''${ver}"
+    }
+
     source ${./assets/enma-ai.zsh-theme}
 
-    bindkey '\e[1~'   beginning-of-line  # Linux console
-    bindkey '\e[H'    beginning-of-line  # xterm
-    bindkey '\eOH'    beginning-of-line  # gnome-terminal
-    bindkey '\e[2~'   overwrite-mode     # Linux console, xterm, gnome-terminal
-    bindkey '\e[3~'   delete-char        # Linux console, xterm, gnome-terminal
-    bindkey '\e[4~'   end-of-line        # Linux console
-    bindkey '\e[F'    end-of-line        # xterm
-    bindkey '\eOF'    end-of-line        # gnome-terminal
+    bindkey '\e[1~'   beginning-of-line
+    bindkey '\e[H'    beginning-of-line
+    bindkey '\eOH'    beginning-of-line
+    bindkey '\e[2~'   overwrite-mode
+    bindkey '\e[3~'   delete-char
+    bindkey '\e[4~'   end-of-line
+    bindkey '\e[F'    end-of-line
+    bindkey '\eOF'    end-of-line
     '';
 
+    # Podado: solo lo usado. git_prompt_info viene de la lib de omz (carga igual),
+    # así que quitar el plugin `git` conserva el prompt pero descarta sus aliases.
+    # Fuera `tmux` (aliases sin uso).
     oh-my-zsh = {
       enable = true;
       plugins = [
-        "git"
         "virtualenv"
-        "tmux"
         "sudo"
       ];
     };
   };
+
+  # cd inteligente: `z <frag>` salta, `zi` interactivo con fzf
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  # Ctrl-R (historial), Ctrl-T (archivos), Alt-C (cd); usa fd bajo el capó
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    defaultCommand = "fd --type f --hidden --follow --exclude .git";
+    fileWidgetCommand = "fd --type f --hidden --follow --exclude .git";
+    changeDirWidgetCommand = "fd --type d --hidden --follow --exclude .git";
+  };
+
+  home.packages = with pkgs; [ fd ];
 
 }
