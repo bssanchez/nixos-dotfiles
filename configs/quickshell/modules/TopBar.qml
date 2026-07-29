@@ -69,9 +69,19 @@ PanelWindow {
             anchors.rightMargin: 10
             spacing: 10
 
-            SystemTray { }
+            Connectivity {}
+
+            Battery {}
+
+            Volume {}
 
             Clock {}
+
+            LockToggle {}
+
+            Notifications {}
+
+            PowerMenu {}
         }
     }
 }

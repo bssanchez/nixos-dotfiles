@@ -1,0 +1,40 @@
+# Mako — Catppuccin Mocha (lavender accent)
+# Paleta alineada con quickshell/themes (catppuccin mocha).
+
+font=FiraCode Nerd Font 11
+width=360
+height=140
+margin=12
+padding=14
+border-size=2
+border-radius=14
+icons=1
+max-icon-size=48
+default-timeout=5000
+ignore-timeout=0
+max-history=50
+layer=overlay
+anchor=top-right
+
+# Colores base
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#b4befe
+progress-color=over #313244
+
+[urgency=low]
+border-color=#a6adc8
+default-timeout=4000
+
+[urgency=normal]
+border-color=#b4befe
+default-timeout=5000
+
+[urgency=critical]
+border-color=#f38ba8
+text-color=#f38ba8
+default-timeout=0
+
+# Agrupa notificaciones repetidas de una misma app
+[app-name=notify-send]
+default-timeout=5000

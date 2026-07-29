@@ -10,9 +10,14 @@
     };
 
     catppuccin.url = "github:catppuccin/nix";
+
+    gazelle = {
+      url = "github:Zeus-Deus/gazelle-tui";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, catppuccin, home-manager, ... }: {
+  outputs = { nixpkgs, catppuccin, home-manager, gazelle, ... }: {
     nixosConfigurations.enma-ai = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -22,10 +27,12 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
+            extraSpecialArgs = { inherit gazelle; };
             users.kid_goth = {
-              imports = [ 
+              imports = [
                 ./modules/kid_goth.home.nix
                 catppuccin.homeModules.catppuccin
+                gazelle.homeModules.gazelle
               ];
             };
             backupFileExtension = "backup";

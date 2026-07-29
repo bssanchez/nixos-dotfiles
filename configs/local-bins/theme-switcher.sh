@@ -24,6 +24,8 @@ if [[ "$CURRENT" == "'$THEME_DARK'" ]]; then
 
   cat ~/.config/kitty/kitty-light.conf > ~/.local/state/theme/kitty.conf
   cat ~/.config/quickshell/themes/light.json > ~/.local/state/theme/quickshell.json
+  cat ~/.config/hypr/hyprlock-colors-light.conf > ~/.local/state/theme/hyprlock-colors.conf
+  cat ~/.config/wlogout/style-light.css > ~/.local/state/theme/wlogout.css
 else
   NEW_THEME=$THEME_DARK
   NEW_QT_THEME=$QT_THEME_DARK
@@ -34,6 +36,8 @@ else
 
   cat ~/.config/kitty/kitty-dark.conf > ~/.local/state/theme/kitty.conf
   cat ~/.config/quickshell/themes/dark.json > ~/.local/state/theme/quickshell.json
+  cat ~/.config/hypr/hyprlock-colors-dark.conf > ~/.local/state/theme/hyprlock-colors.conf
+  cat ~/.config/wlogout/style-dark.css > ~/.local/state/theme/wlogout.css
 fi
 
 # Implementations

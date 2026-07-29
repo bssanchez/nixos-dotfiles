@@ -1,0 +1,24 @@
+# ── Git ignore GLOBAL (~/.config/git/ignore) ───────────────────────────
+# Cosas locales de mi entorno NixOS que no deben ensuciar repos de otros.
+# Nadie más en el trabajo usa Nix, así que estos archivos se ignoran en
+# TODO repo sin tener que tocar el .gitignore de cada proyecto.
+#
+# Nota: git NO ignora archivos que ya están rastreados. En mis propios
+# repos Nix (p.ej. ~/.nix-dotfiles) flake.nix/flake.lock siguen versionados.
+# Si algún día quiero versionar un flake nuevo: `git add -f flake.nix`.
+
+# direnv
+.direnv/
+.envrc
+
+# Nix — dev shells por proyecto (solo en la raíz del repo)
+/flake.nix
+/flake.lock
+/shell.nix
+/default.nix
+
+# Artefactos de nix build
+result
+result-*
+
+**/.claude/settings.local.json

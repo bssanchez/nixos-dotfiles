@@ -5,7 +5,27 @@
       enable = true;
       defaultApplications = {
         "inode/directory" = [ "pcmanfm-qt.desktop" ];
-      };
+      } // (
+        let nomacs = [ "org.nomacs.ImageLounge.desktop" ]; in {
+          "image/avif" = nomacs;
+          "image/bmp" = nomacs;
+          "image/gif" = nomacs;
+          "image/heic" = nomacs;
+          "image/heif" = nomacs;
+          "image/jpeg" = nomacs;
+          "image/jxl" = nomacs;
+          "image/png" = nomacs;
+          "image/tiff" = nomacs;
+          "image/webp" = nomacs;
+          "image/x-eps" = nomacs;
+          "image/x-ico" = nomacs;
+          "image/x-portable-bitmap" = nomacs;
+          "image/x-portable-graymap" = nomacs;
+          "image/x-portable-pixmap" = nomacs;
+          "image/x-xbitmap" = nomacs;
+          "image/x-xpixmap" = nomacs;
+        }
+      );
     };
 
     userDirs = {

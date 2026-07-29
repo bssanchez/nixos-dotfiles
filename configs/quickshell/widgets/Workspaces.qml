@@ -40,7 +40,8 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: Hyprland.dispatch("workspace " + (index + 1))
+                    // Hyprland 0.55 (config Lua): dispatch interpreta código Lua.
+                    onClicked: Hyprland.dispatch("hl.dsp.focus({ workspace = " + (index + 1) + " })")
                 }
             }
         }
