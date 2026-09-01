@@ -76,6 +76,8 @@ PanelWindow {
 
             Battery {}
 
+            Brightness {}
+
             Volume {}
 
             Clock {}

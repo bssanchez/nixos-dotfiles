@@ -55,6 +55,17 @@ in {
     ".local/bin/theme-switcher.sh".source = link "${dotfiles}/local-bins/theme-switcher.sh";
     ".local/bin/byzanz-gui".source = link "${dotfiles}/local-bins/byzanz-gui";
     ".local/bin/byzanz-gui-region".source = link "${dotfiles}/local-bins/byzanz-gui-region";
+    ".local/bin/power-report".source = link "${dotfiles}/local-bins/power-report.sh";
+    ".local/bin/battery-log".source = link "${dotfiles}/local-bins/battery-log.sh";
+  };
+
+  systemd.user.services.battery-log = {
+    Unit.Description = "Sample battery state for diagnosing abrupt drops";
+    Service = {
+      ExecStart = "${config.home.homeDirectory}/.local/bin/battery-log";
+      Restart = "always";
+    };
+    Install.WantedBy = [ "default.target" ];
   };
 
   # direnv + nix-direnv: (flake.nix / .envrc)

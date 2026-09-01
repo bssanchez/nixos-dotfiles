@@ -18,6 +18,7 @@
     ./hardware-configuration.nix
 
     ./session.nix
+    ./power.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
