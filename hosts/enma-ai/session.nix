@@ -6,6 +6,10 @@ let
   };
 
 in {
+  # hyprland.desktop (start-hyprland), no hyprland-uwsm.desktop: el paquete trae ambos
+  # y sin esto sddm preselecciona el uwsm por orden alfabético.
+  services.displayManager.defaultSession = "hyprland";
+
   services.displayManager.sddm = {
     enable = true;
     wayland = {

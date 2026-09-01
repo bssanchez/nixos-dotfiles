@@ -15,7 +15,9 @@
       nix-test = "sudo nixos-rebuild test --flake ~/.nix-dotfiles#$(hostname)";
       nix-clean = "sudo nix-collect-garbage -d";
       nix-store-check = "nix-store --verify --check-contents && nix-store --optimise";
-      nix-lock = "nix flake update";
+      # --flake: permite correrlo desde cualquier directorio. Acepta inputs: nix-lock nixpkgs
+      nix-lock = "nix flake update --flake ~/.nix-dotfiles";
+      nix-upgrade = "nix flake update --flake ~/.nix-dotfiles && sudo nixos-rebuild switch --flake ~/.nix-dotfiles#$(hostname)";
       ls = "ls -F --color=always";
     };
 
