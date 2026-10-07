@@ -165,13 +165,13 @@ Item {
             Text {
                 text: ""
                 color: theme.colors.red || "black"
-                font.pixelSize: 16
+                font.pixelSize: 14
             }
 
             Text {
                 text: cpuWidget.totalCpu + "%"
                 color: theme.colors.text || "black"
-                font.pixelSize: 16
+                font.pixelSize: 14
             }
         }
 

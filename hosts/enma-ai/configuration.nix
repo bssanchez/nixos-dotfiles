@@ -195,6 +195,16 @@
     xwayland.enable = true;
   };
 
+  # Hyprland no arranca por uwsm, así que nada activa graphical-session.target y
+  # xdg-desktop-portal (Requisite=graphical-session.target) nunca puede arrancar.
+  systemd.user.targets.hyprland-session = {
+    description = "Hyprland compositor session";
+    documentation = [ "man:systemd.special(7)" ];
+    bindsTo = [ "graphical-session.target" ];
+    wants = [ "graphical-session-pre.target" ];
+    after = [ "graphical-session-pre.target" ];
+  };
+
   programs.nm-applet = {
     enable = true;
     indicator = true;

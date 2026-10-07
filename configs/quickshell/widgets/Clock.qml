@@ -157,7 +157,7 @@ Item {
 
         Row {
             anchors.centerIn: parent
-            spacing: 8
+            spacing: 6
 
             Text {
                 color: theme.colors.peach

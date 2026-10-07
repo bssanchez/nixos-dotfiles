@@ -55,19 +55,19 @@ Item {
 
         Row {
             anchors.centerIn: parent
-            spacing: 8
+            spacing: 6
 
             Text {
                 text: brightnessWidget.brightnessIcon()
                 color: theme.colors.yellow || "white"
                 font.family: theme.fontFamily
-                font.pixelSize: 15
+                font.pixelSize: 14
             }
 
             Text {
                 text: brightnessWidget.level + "%"
                 color: theme.colors.text || "black"
-                font.pixelSize: 15
+                font.pixelSize: 14
             }
         }
 

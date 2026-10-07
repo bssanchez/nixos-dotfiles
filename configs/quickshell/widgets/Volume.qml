@@ -59,19 +59,19 @@ Item {
 
         Row {
             anchors.centerIn: parent
-            spacing: 8
+            spacing: 6
 
             Text {
                 text: volumeWidget.volumeIcon()
                 color: volumeWidget.muted ? (theme.colors.overlay0 || "gray") : (theme.colors.sky || "white")
                 font.family: theme.fontFamily
-                font.pixelSize: 15
+                font.pixelSize: 14
             }
 
             Text {
                 text: volumeWidget.muted ? "Mute" : (volumeWidget.volume + "%")
                 color: theme.colors.text || "black"
-                font.pixelSize: 15
+                font.pixelSize: 14
             }
         }
 
