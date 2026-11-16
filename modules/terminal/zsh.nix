@@ -21,8 +21,8 @@
       nix-prebuild = "(cd ~/.nix-dotfiles && nixos-rebuild build --flake .#$(hostname))";
       nix-diff = "nix store diff-closures /run/current-system ~/.nix-dotfiles/result";
       nix-upgrade = "nix flake update --flake ~/.nix-dotfiles && sudo nixos-rebuild switch --flake ~/.nix-dotfiles#$(hostname)";
-      navi = "CLAUDE_CONFIG_DIR=~/.claude-navi navi";
-      lain = "CLAUDE_CONFIG_DIR=~/.claude-lain lain";
+      navi = "CLAUDE_CONFIG_DIR=~/.claude-navi claude";
+      lain = "CLAUDE_CONFIG_DIR=~/.claude-lain claude";
       ls = "ls -F --color=always";
     };
 
