@@ -62,6 +62,7 @@ PanelWindow {
             anchors.verticalCenter: parent.verticalCenter
 
             Workspaces {
+                anchors.centerIn: parent
                 monitorName: topBar.screen?.name ?? ""
             }
         }
