@@ -17,4 +17,9 @@ Singleton {
     function format(fmt) {
         return Qt.formatDateTime(clock.date, fmt)
     }
+
+    // Qt.formatDateTime ignora el locale del sistema para nombres de día/mes.
+    function formatLocal(fmt) {
+        return Qt.locale().toString(clock.date, fmt)
+    }
 }

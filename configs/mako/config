@@ -38,3 +38,7 @@ default-timeout=0
 # Agrupa notificaciones repetidas de una misma app
 [app-name=notify-send]
 default-timeout=5000
+
+# Con la isla de quickshell activa, mako guarda historial pero no dibuja popups.
+[mode=island]
+invisible=1

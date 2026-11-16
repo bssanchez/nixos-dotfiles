@@ -17,7 +17,7 @@
 
 - **NixOS Flake** — Single `nixos-rebuild switch` deploys the entire OS, user env, and dotfiles. Reproducible. Immutable. Declarative.
 - **Hyprland** — Tiling Wayland compositor configured in **Lua** with modular includes, per-monitor workspaces (hyprsplit), app freezer (SIGSTOP/SIGCONT), and dynamic layout toggling (dwindle ↔ scrolling).
-- **Quickshell panel** — A fully custom top bar and system widgets written in **QML**, replacing Waybar. Includes per-core CPU bars, memory top-procs, disk pie charts, PipeWire volume, Bluetooth/WiFi popovers, notification history, Colombian holiday calendar, and a real-time audio visualizer.
+- **Quickshell panel** — A fully custom shell written in **QML**, replacing Waybar. By default it's a **dynamic island** attached to the top edge: workspaces plus a status drop at rest, it morphs for "moments" (now playing with mini cava bars, volume/brightness OSD, incoming notifications, low battery) and expands into a dashboard where every module (WiFi/Bluetooth, per-core CPU, memory top-procs, disk pie charts, Colombian holiday calendar, notifications, media controls, system tray menus) opens as a page inside the island. The classic full-width bar is still available (`SUPER + SHIFT + B`).
 - **Catppuccin Everything** — Every pixel of this system is bathed in Catppuccin Mocha (dark) or Latte (light). GTK, Qt/Kvantum, Kitty, Neovim, Rofi, Wlogout, Mako, Tmux, Hyprlock, and the Quickshell panel all consume the same color palette from a single source of truth.
 - **Dynamic theme switching** — One command (`theme-switcher.sh`) flips between dark and light across **all** running applications simultaneously, via IPC, file sources, and live config reloads. Even hyprlock and the lockscreen colors update.
 - **ZSH + powerline prompt** — Custom `enma-ai` theme with 閻魔 あい herself in the prompt, showing git status, virtualenv, and Node version. Oh-my-zsh, zoxide, fzf, syntax highlighting, autosuggestions.
@@ -133,6 +133,8 @@ This single script propagates the theme change to:
 | `SUPER + SHIFT + P` | Freeze/unfreeze app (SIGSTOP/SIGCONT) |
 | `SUPER + V` | Cliphist clipboard picker |
 | `SUPER + SHIFT + V` | Toggle media visualizer |
+| `SUPER + Space` | Open/close the island dashboard |
+| `SUPER + SHIFT + B` | Switch between island and classic bar |
 | `SUPER + L` | Lock screen |
 | `SUPER + W` | Power menu (wlogout) |
 | `SUPER + BackSpace` | File manager (pcmanfm) |
