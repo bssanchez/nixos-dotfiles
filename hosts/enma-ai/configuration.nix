@@ -38,7 +38,7 @@
   boot.initrd.luks.devices = {
     "luksystem" = {
       device = "/dev/disk/by-uuid/10436ff8-553a-4450-b8c3-0811a4fb416e";
-      preLVM = true;
+      # preLVM = true;
     };
     "luksdata" = {
       device = "/dev/disk/by-uuid/325cf63e-4d88-4710-8028-b08d2464e6a8";
