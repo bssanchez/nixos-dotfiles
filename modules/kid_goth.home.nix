@@ -2,6 +2,15 @@
 let
   dotfiles = "${config.home.homeDirectory}/.nix-dotfiles/configs";
   link = config.lib.file.mkOutOfStoreSymlink;
+
+  # Per-skill links: <profile>/skills/synced is managed by claude.ai.
+  skills = builtins.attrNames (builtins.readDir ../configs/agents/skills);
+  claudeProfiles = [ ".claude" ".claude-lain" ".claude-navi" ];
+  skillLinks = builtins.listToAttrs (pkgs.lib.concatMap (profile:
+    map (skill: {
+      name = "${profile}/skills/${skill}";
+      value.source = link "${dotfiles}/agents/skills/${skill}";
+    }) skills) claudeProfiles);
 in {
   imports = [
     ./terminal/zsh.nix
@@ -49,7 +58,9 @@ in {
     "git/ignore".source = link "${dotfiles}/git/ignore";
   };
 
-  home.file = {
+  home.file = skillLinks // {
+    ".agents/skills".source = link "${dotfiles}/agents/skills";
+    ".agents/.skill-lock.json".source = link "${dotfiles}/agents/.skill-lock.json";
     ".tmux.conf".source = link "${dotfiles}/tmux.conf";
     ".local/bin/wallpaper-rotate.sh".source = link "${dotfiles}/local-bins/wallpaper-rotate.sh";
     ".local/bin/theme-switcher.sh".source = link "${dotfiles}/local-bins/theme-switcher.sh";

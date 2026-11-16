@@ -1,0 +1,144 @@
+{
+  "version": 3,
+  "skills": {
+    "improve-ui": {
+      "source": "ibelick/ui-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/ibelick/ui-skills.git",
+      "skillPath": "skills/improve-ui/SKILL.md",
+      "skillFolderHash": "dfe1caace864e8a5db1719c4440633cd7f2f7e83",
+      "installedAt": "2026-11-03T14:23:25.842Z",
+      "updatedAt": "2026-11-03T14:23:25.842Z"
+    },
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/pbakaus/impeccable.git",
+      "skillPath": ".agents/skills/impeccable/SKILL.md",
+      "skillFolderHash": "8a24d1965ce33f4b519907bf98c9aaa323fffcb6",
+      "installedAt": "2026-11-09T12:57:33.247Z",
+      "updatedAt": "2026-11-16T18:10:25.598Z",
+      "commit": "d41d9860b0094dcb68030657da63461212835aaa"
+    },
+    "antislop": {
+      "source": "miqdadbadjuber/anti-slop",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/miqdadbadjuber/anti-slop.git",
+      "commit": "35b54dc660aa7d11428ee62c5788ad36bc18ac3c",
+      "skillPath": "skills/antislop/SKILL.md",
+      "skillFolderHash": "851e04b2f79c362260b6934adeb8ab0d75e61525",
+      "installedAt": "2026-11-16T18:12:11.585Z",
+      "updatedAt": "2026-11-16T18:12:11.585Z"
+    },
+    "antislop-code": {
+      "source": "miqdadbadjuber/anti-slop",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/miqdadbadjuber/anti-slop.git",
+      "commit": "35b54dc660aa7d11428ee62c5788ad36bc18ac3c",
+      "skillPath": "skills/antislop-code/SKILL.md",
+      "skillFolderHash": "17976b03ca7f88e09ed11ef4b796461f46758156",
+      "installedAt": "2026-11-16T18:12:11.585Z",
+      "updatedAt": "2026-11-16T18:12:11.585Z"
+    },
+    "antislop-human": {
+      "source": "miqdadbadjuber/anti-slop",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/miqdadbadjuber/anti-slop.git",
+      "commit": "35b54dc660aa7d11428ee62c5788ad36bc18ac3c",
+      "skillPath": "skills/antislop-human/SKILL.md",
+      "skillFolderHash": "dbd32e9bffb0a8b097de60f710e7722bb5f3dc02",
+      "installedAt": "2026-11-16T18:12:11.586Z",
+      "updatedAt": "2026-11-16T18:12:11.586Z"
+    },
+    "antislop-layoutmobile": {
+      "source": "miqdadbadjuber/anti-slop",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/miqdadbadjuber/anti-slop.git",
+      "commit": "35b54dc660aa7d11428ee62c5788ad36bc18ac3c",
+      "skillPath": "skills/antislop-layoutmobile/SKILL.md",
+      "skillFolderHash": "651391535f3c3c59c673456635259d9531d663d4",
+      "installedAt": "2026-11-16T18:12:11.586Z",
+      "updatedAt": "2026-11-16T18:12:11.586Z"
+    },
+    "antislop-ui": {
+      "source": "miqdadbadjuber/anti-slop",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/miqdadbadjuber/anti-slop.git",
+      "commit": "35b54dc660aa7d11428ee62c5788ad36bc18ac3c",
+      "skillPath": "skills/antislop-ui/SKILL.md",
+      "skillFolderHash": "0c979fd4544c96444a8d70960dab7beecb0f63d9",
+      "installedAt": "2026-11-16T18:12:11.586Z",
+      "updatedAt": "2026-11-16T18:12:11.586Z"
+    },
+    "create-agentsmd": {
+      "source": "github/awesome-copilot",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/github/awesome-copilot.git",
+      "commit": "dc0083dbe22133bfa7ce3500dee85e187e0cd47a",
+      "skillPath": "skills/create-agentsmd/SKILL.md",
+      "skillFolderHash": "290ab8ae85ba8695e9bceb674e74177e76f8633d",
+      "installedAt": "2026-11-16T18:12:19.799Z",
+      "updatedAt": "2026-11-16T18:12:19.799Z"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "commit": "50894c1d98bc45ca1ab127213e59d6525065b5e7",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "76a98a285cb0434f3d39e1a873823556330e398b",
+      "installedAt": "2026-11-16T18:12:22.536Z",
+      "updatedAt": "2026-11-16T18:12:22.536Z"
+    },
+    "frontend-patterns": {
+      "source": "affaan-m/ECC",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/affaan-m/ECC.git",
+      "commit": "d2ef2680594f9a17526a6e1a2e18b3d242c5d17b",
+      "skillPath": "skills/frontend-patterns/SKILL.md",
+      "skillFolderHash": "380b1cf11c65e7b2f99631ca67176ffefb9c9a63",
+      "installedAt": "2026-11-16T18:12:28.267Z",
+      "updatedAt": "2026-11-16T18:12:28.267Z"
+    },
+    "logging-best-practices": {
+      "source": "boristane/agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/boristane/agent-skills.git",
+      "commit": "8aa14dd16a1340a6049e6d7cd58e2ed52333a550",
+      "skillPath": "skills/logging-best-practices/SKILL.md",
+      "skillFolderHash": "075c83b8bf75e6f7b7ac97b8cf752f819da7cdb7",
+      "installedAt": "2026-11-16T18:12:31.072Z",
+      "updatedAt": "2026-11-16T18:12:31.072Z"
+    },
+    "owasp-security": {
+      "source": "agamm/claude-code-owasp",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/agamm/claude-code-owasp.git",
+      "commit": "1ae29cb22518560e3625d77f2ae64f61647d9201",
+      "skillPath": ".claude/skills/owasp-security/SKILL.md",
+      "skillFolderHash": "cacfc70b479fbac647d51d6c3fd653cad319ac57",
+      "pluginName": "owasp-security",
+      "installedAt": "2026-11-16T18:12:33.458Z",
+      "updatedAt": "2026-11-16T18:12:33.458Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "cline",
+    "codex",
+    "cursor",
+    "droid",
+    "fx",
+    "gemini-cli",
+    "github-copilot",
+    "kilo",
+    "kimi-code-cli",
+    "opencode",
+    "pi",
+    "warp",
+    "zed"
+  ]
+}
