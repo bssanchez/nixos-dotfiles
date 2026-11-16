@@ -205,6 +205,10 @@
     after = [ "graphical-session-pre.target" ];
   };
 
+  programs.ssh.startAgent = true;
+
+  systemd.user.services.ssh-agent.wantedBy = lib.mkForce [ ];
+
   programs.nm-applet = {
     enable = true;
     indicator = true;
