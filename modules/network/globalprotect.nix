@@ -9,4 +9,6 @@ in
     gpauth
     gpclient
   ];
+
+  security.pki.certificateFiles = [ ./certs/proteccion-root-ca.pem ];
 }
