@@ -102,14 +102,16 @@ hl.window_rule({
 
 hl.window_rule({
 	name = "workspace-1-apps",
-	match = { class = "^(pcmanfm)$" },
+	match = { class = "^(pcmanfm|pcmanfm-qt)$" },
 
 	workspace = 1,
 })
 
 hl.window_rule({
 	name = "workspace-2-apps",
-	match = { class = "^(Windsurf|windsurf|Kiro|Code|code|Antigravity|antigravity|Cursor|cursor)$" },
+	match = {
+		class = "^(Windsurf|windsurf|Kiro|Code|code|Antigravity|antigravity|Cursor|cursor|com.microsoft.VSCode)$",
+	},
 
 	workspace = 2,
 })

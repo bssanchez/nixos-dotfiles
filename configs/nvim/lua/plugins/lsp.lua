@@ -147,7 +147,19 @@ return {
       },
       html = { filetypes = { 'html', 'twig', 'hbs' } },
       cssls = {},
-      tailwindcss = {},
+      -- Only attach in real Tailwind projects; the default '.git' fallback made /srv/http the root
+      tailwindcss = {
+        root_dir = function(bufnr, on_dir)
+          local fname = vim.api.nvim_buf_get_name(bufnr)
+          local markers = require('lspconfig.util').insert_package_json(
+            { 'tailwind.config.js', 'tailwind.config.cjs', 'tailwind.config.mjs', 'tailwind.config.ts' },
+            'tailwindcss',
+            fname
+          )
+          local root = vim.fs.root(fname, markers)
+          if root then on_dir(root) end
+        end,
+      },
       dockerls = {},
       sqlls = {},
       jsonls = {},

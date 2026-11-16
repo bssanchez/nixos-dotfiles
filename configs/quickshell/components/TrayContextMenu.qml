@@ -10,17 +10,18 @@ PanelWindow {
     id: root
 
     property var sourceMenuHandle: null
-    property var menuHandle: null
-    property real menuX: 0
-    property real menuY: 0
+    // Opener whose children are currently shown (root menu or a submenu level)
+    property var currentOpener: sourceOpener
     property bool hasCurrent: false
     property int animLength: 400
     property var animCurve: [0.05, 0, 0.133, 0.06, 0.166, 0.4, 0.208, 0.82, 0.25, 1, 1, 1]
     property var colors: theme.colors
 
+    readonly property int depth: pathModel.count
+
     function open(handle, x, y) {
+        resetPath();
         sourceMenuHandle = handle;
-        menuHandle = handle;
         let width = 240;
         let safeX = x - (width / 2);
         safeX = Math.max(8, Math.min(safeX, Screen.width - width - 8));
@@ -30,14 +31,55 @@ PanelWindow {
     }
 
     function close() {
-        sourceMenuHandle = null;
-        menuHandle = null;
         hasCurrent = false;
+        resetPath();
+        sourceMenuHandle = null;
     }
+
+    function resetPath() {
+        currentOpener = sourceOpener;
+        pathModel.clear();
+        highlight.active = false;
+    }
+
+    // Submenus are tracked by label/position instead of by object reference:
+    // some apps (nm-applet) rebuild their whole dbusmenu with new ids, which
+    // destroys the entry we were holding and left the menu empty.
+    function enterSubmenu(entry, position) {
+        highlight.active = false;
+        pathModel.append({ label: entry.text || "", position: position });
+        currentOpener = levels.objectAt(pathModel.count - 1);
+    }
+
+    function goBack() {
+        if (pathModel.count === 0) {
+            close();
+            return;
+        }
+        highlight.active = false;
+        currentOpener = pathModel.count > 1 ? levels.objectAt(pathModel.count - 2) : sourceOpener;
+        pathModel.remove(pathModel.count - 1);
+    }
+
+    function findEntry(opener, label, position) {
+        if (!opener)
+            return null;
+        const items = opener.children.values;
+        for (let i = 0; i < items.length; i++) {
+            const e = items[i];
+            if (e && e.hasChildren && e.text === label)
+                return e;
+        }
+        const fallback = items[position];
+        return fallback && fallback.hasChildren ? fallback : null;
+    }
+
+    property real menuX: 0
+    property real menuY: 0
 
     color: "transparent"
     WlrLayershell.layer: WlrLayer.Overlay
-    WlrLayershell.keyboardFocus: wrapper.visible ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+    WlrLayershell.keyboardFocus: root.hasCurrent ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
     anchors {
         top: true
@@ -46,9 +88,47 @@ PanelWindow {
         right: true
     }
 
+    // While open the whole screen takes input so clicking outside closes the
+    // menu; while closed the mask is empty and clicks pass through.
+    mask: Region {
+        item: root.hasCurrent ? backdrop : null
+    }
+
+    ListModel {
+        id: pathModel
+    }
+
+    QsMenuOpener {
+        id: sourceOpener
+
+        menu: root.sourceMenuHandle
+    }
+
+    // One opener per submenu level, so every parent stays loaded and each
+    // level re-resolves itself when the app rebuilds its menu.
+    Instantiator {
+        id: levels
+
+        model: pathModel
+        onObjectAdded: (index, object) => {
+            object.parentOpener = index === 0 ? sourceOpener : levels.objectAt(index - 1);
+        }
+
+        delegate: QsMenuOpener {
+            required property string label
+            required property int position
+            property var parentOpener: null
+
+            menu: root.findEntry(parentOpener, label, position)
+        }
+    }
+
     MouseArea {
+        id: backdrop
+
         anchors.fill: parent
-        enabled: wrapper.visible
+        enabled: root.hasCurrent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
         onClicked: root.close()
     }
 
@@ -62,7 +142,10 @@ PanelWindow {
         width: 240
         visible: height > 0
         clip: true
+        focus: true
         implicitHeight: root.hasCurrent ? contentHeight : 0
+
+        Keys.onEscapePressed: root.goBack()
 
         Rectangle {
             id: menuBg
@@ -75,16 +158,10 @@ PanelWindow {
             bottomLeftRadius: 14
             bottomRightRadius: 14
 
-            QsMenuOpener {
-                id: sourceOpener
-
-                menu: root.sourceMenuHandle
-            }
-
-            QsMenuOpener {
-                id: opener
-
-                menu: root.menuHandle
+            // Swallow clicks on the padding so they don't reach the backdrop
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
             }
 
             Rectangle {
@@ -130,14 +207,69 @@ PanelWindow {
                 anchors.rightMargin: 8
                 spacing: 2
 
+                // Back row, only inside submenus
+                Item {
+                    id: backItem
+
+                    readonly property bool isHighlighted: highlight.active && highlight.targetY === backItem.y
+
+                    visible: root.depth > 0
+                    width: menuColumn.width
+                    height: visible ? 36 : 0
+
+                    RowLayout {
+                        anchors.fill: parent
+                        anchors.leftMargin: 12
+                        anchors.rightMargin: 12
+                        spacing: 12
+
+                        Text {
+                            Layout.preferredWidth: 20
+                            horizontalAlignment: Text.AlignHCenter
+                            text: ""
+                            font.family: theme.fontFamily
+                            font.pixelSize: 12
+                            color: root.colors.text
+                        }
+
+                        Text {
+                            text: root.depth > 0 ? pathModel.get(root.depth - 1).label : ""
+                            color: backItem.isHighlighted ? root.colors.text : root.colors.subtext0
+                            Layout.fillWidth: true
+                            elide: Text.ElideRight
+                            font.pixelSize: 13
+                            font.bold: true
+                            font.letterSpacing: 0.2
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onEntered: {
+                            highlight.targetY = backItem.y;
+                            highlight.active = true;
+                        }
+                        onClicked: root.goBack()
+                    }
+
+                }
+
                 Repeater {
-                    model: opener.children
+                    model: root.currentOpener ? root.currentOpener.children : null
 
                     delegate: Item {
                         id: menuItem
 
+                        required property var modelData
+                        required property int index
+
                         property bool isSeparator: modelData.isSeparator
                         property bool hasChildren: modelData.hasChildren
+                        readonly property bool isHighlighted: highlight.active && highlight.targetY === menuItem.y
 
                         width: menuColumn.width
                         height: isSeparator ? 12 : 36
@@ -154,7 +286,7 @@ PanelWindow {
 
                         // Highlight mark
                         Rectangle {
-                            visible: !isSeparator && highlight.active && highlight.targetY === menuItem.y
+                            visible: !isSeparator && menuItem.isHighlighted
                             width: 3
                             height: 16
                             radius: 2
@@ -185,29 +317,16 @@ PanelWindow {
                                     layer.enabled: true
 
                                     layer.effect: ColorOverlay {
-                                        color: (highlight.active && highlight.targetY === menuItem.y)
-                                        ? root.colors.text
-                                        : root.colors.subtext0
+                                        color: menuItem.isHighlighted ? root.colors.text : root.colors.subtext0
                                     }
 
-                                }
-
-                                Text {
-                                    anchors.centerIn: parent
-                                    visible: !(modelData.icon !== undefined && modelData.icon !== "")
-                                    text: ""
-                                    font.family: theme.fontFamily
-                                    font.pixelSize: 6
-                                    color: "transparent"
                                 }
 
                             }
 
                             Text {
                                 text: modelData.text || ""
-                                color: (highlight.active && highlight.targetY === menuItem.y)
-                                ? root.colors.text
-                                : root.colors.subtext0
+                                color: menuItem.isHighlighted ? root.colors.text : root.colors.subtext0
                                 Layout.fillWidth: true
                                 elide: Text.ElideRight
                                 font.pixelSize: 13
@@ -231,22 +350,18 @@ PanelWindow {
 
                             anchors.fill: parent
                             hoverEnabled: true
+                            enabled: !isSeparator && modelData.enabled !== false
                             cursorShape: isSeparator ? Qt.ArrowCursor : Qt.PointingHandCursor
                             onEntered: {
-                                if (!menuItem.isSeparator) {
-                                    highlight.targetY = menuItem.y;
-                                    highlight.active = true;
-                                } else {
-                                }
+                                highlight.targetY = menuItem.y;
+                                highlight.active = true;
                             }
                             onClicked: {
-                                if (!menuItem.isSeparator) {
-                                    if (modelData.hasChildren) {
-                                        root.menuHandle = modelData;
-                                    } else {
-                                        modelData.triggered();
-                                        root.close();
-                                    }
+                                if (modelData.hasChildren) {
+                                    root.enterSubmenu(modelData, menuItem.index);
+                                } else {
+                                    modelData.triggered();
+                                    root.close();
                                 }
                             }
                         }
@@ -264,10 +379,6 @@ PanelWindow {
 
         }
 
-    }
-
-    mask: Region {
-        item: wrapper.visible ? wrapper : null
     }
 
 }

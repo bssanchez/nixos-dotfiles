@@ -52,6 +52,8 @@
       [[ -n $ver ]] && echo " %F{green}󰎙 %F{cyan}''${ver}"
     }
 
+    setopt NO_BEEP
+
     source ${./assets/enma-ai.zsh-theme}
 
     bindkey '\e[1~'   beginning-of-line
