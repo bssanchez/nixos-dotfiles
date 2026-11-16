@@ -13,11 +13,16 @@
 
       nix-switch = "sudo nixos-rebuild switch --flake ~/.nix-dotfiles#$(hostname)";
       nix-test = "sudo nixos-rebuild test --flake ~/.nix-dotfiles#$(hostname)";
-      nix-clean = "sudo nix-collect-garbage -d";
+      nix-clean = "sudo nix-collect-garbage --delete-older-than 30d";
       nix-store-check = "nix-store --verify --check-contents && nix-store --optimise";
       # --flake: permite correrlo desde cualquier directorio. Acepta inputs: nix-lock nixpkgs
       nix-lock = "nix flake update --flake ~/.nix-dotfiles";
+      # subshell + cd: `nixos-rebuild build` deja ./result en el cwd, y nix-diff lo espera en el repo.
+      nix-prebuild = "(cd ~/.nix-dotfiles && nixos-rebuild build --flake .#$(hostname))";
+      nix-diff = "nix store diff-closures /run/current-system ~/.nix-dotfiles/result";
       nix-upgrade = "nix flake update --flake ~/.nix-dotfiles && sudo nixos-rebuild switch --flake ~/.nix-dotfiles#$(hostname)";
+      navi = "CLAUDE_CONFIG_DIR=~/.claude-navi navi";
+      lain = "CLAUDE_CONFIG_DIR=~/.claude-lain lain";
       ls = "ls -F --color=always";
     };
 

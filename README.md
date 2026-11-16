@@ -45,6 +45,59 @@ nix run home-manager -- switch --flake ~/.nix-dotfiles#kid_goth
 
 ---
 
+## System Updates
+
+Shell aliases wrap the whole cycle. They take `--flake ~/.nix-dotfiles`, so they run from any directory.
+
+| Alias | Does |
+|-------|------|
+| `nix-lock` | Update flake inputs. Accepts a specific one: `nix-lock nixpkgs` |
+| `nix-prebuild` | Build the new system **without** touching the running one. No sudo |
+| `nix-diff` | Show what actually changes between the running system and the build |
+| `nix-test` | Activate the new system without making it the boot default |
+| `nix-switch` | Activate and set as boot default |
+| `nix-clean` | Garbage-collect generations older than 30 days |
+| `nix-store-check` | Verify store integrity and deduplicate |
+
+### Applying config changes
+
+No input updates, so the lock stays put:
+
+```bash
+nix-switch
+```
+
+Changes under `configs/` deployed as out-of-store symlinks are live without any rebuild. Hyprland autostart changes need a fresh session.
+
+### Upgrading the system
+
+```bash
+nix-lock          # update inputs
+nix-prebuild      # compile first — separates "won't build" from "builds but breaks"
+nix-diff          # review the closure diff before committing to it
+nix-test          # optional: try it; reboot reverts if it misbehaves
+nix-switch        # make it permanent
+
+git -C ~/.nix-dotfiles commit flake.lock -m "chore: upgrade $(date +%Y%m%d)"
+```
+
+Commit `flake.lock` so the generation is reproducible.
+
+> `nix-upgrade` chains `nix-lock` and `nix-switch` in one shot. It skips the build and diff steps, so a regression lands straight on the running system. Fine for routine bumps, not for ones you care about.
+
+### Rolling back
+
+```bash
+nixos-rebuild list-generations
+sudo nixos-rebuild switch --rollback
+```
+
+Or pick an older generation from the systemd-boot menu at boot.
+
+> `nix-clean` keeps the last 30 days of generations on purpose. A bare `nix-collect-garbage -d` deletes every older generation, including the one you would roll back to — avoid it right after an upgrade.
+
+---
+
 ## Theme Switching
 
 ```bash
