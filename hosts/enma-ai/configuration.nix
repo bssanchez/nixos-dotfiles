@@ -19,6 +19,7 @@
 
     ./session.nix
     ./power.nix
+    ../../modules/network/globalprotect.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
