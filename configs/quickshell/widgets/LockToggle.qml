@@ -1,27 +1,10 @@
 import QtQuick
-import QtCore
 
-import Quickshell
-import Quickshell.Io
+import "../services"
 
 Item {
-    id: root
     width: 34
     height: 34
-
-    readonly property string statePath: StandardPaths.writableLocation(StandardPaths.HomeLocation) + "/.cache/idle_enabled"
-
-    readonly property bool enabled: (stateFile.text() || "enabled").indexOf("disabled") === -1
-
-    FileView {
-        id: stateFile
-        path: root.statePath
-        watchChanges: true
-        blockLoading: true
-        onFileChanged: this.reload()
-    }
-
-    Process { id: toggleProc }
 
     Rectangle {
         anchors.fill: parent
@@ -30,8 +13,8 @@ Item {
 
         Text {
             anchors.centerIn: parent
-            text: root.enabled ? "󰒲" : "󰒳"
-            color: root.enabled ? (theme.colors.text || "white") : (theme.colors.peach || "orange")
+            text: Idle.enabled ? "󰒲" : "󰒳"
+            color: Idle.enabled ? (theme.colors.text || "white") : (theme.colors.peach || "orange")
             font.family: theme.fontFamily
             font.pixelSize: 16
         }
@@ -41,10 +24,7 @@ Item {
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                toggleProc.command = ["sh", "-c", "~/.config/hypr/scripts/toggle_idle.sh"];
-                toggleProc.running = true;
-            }
+            onClicked: Idle.toggle()
         }
     }
 }

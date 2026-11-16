@@ -8,6 +8,8 @@ Rectangle {
 
     property string monitorName: ""
     readonly property int numWorkspaces: 10
+    property int slotWidth: 32
+    property int slotHeight: 24
 
     readonly property var mon:
         (Hyprland.monitors?.values ?? []).find(m => m.name === monitorName) ?? null
@@ -22,8 +24,6 @@ Rectangle {
 
     readonly property int slotCount:
         Math.max(7, monWs.reduce((acc, w) => Math.max(acc, w.disp), 0))
-
-    anchors.centerIn: parent
 
     width: wsRow.width + 16
     height: wsRow.height + 8
@@ -40,8 +40,8 @@ Rectangle {
             model: ws.slotCount
 
             Item {
-                width: 32
-                height: 24
+                width: ws.slotWidth
+                height: ws.slotHeight
 
                 property var workspace: ws.monWs.find(w => w.disp === index + 1) ?? null
                 property bool isActive: ws.activeDisp === (index + 1)
