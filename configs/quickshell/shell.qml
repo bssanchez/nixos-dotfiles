@@ -30,6 +30,22 @@ ShellRoot {
         layoutFile.setText(name === "bar" ? "bar" : "island");
     }
 
+    // Auto-ocultado de la isla: activo salvo que el archivo diga "off".
+    readonly property bool autoHide: (autoHideFile.text() || "").trim() !== "off"
+
+    function setAutoHide(on) {
+        autoHideFile.setText(on ? "on" : "off");
+    }
+
+    FileView {
+        id: autoHideFile
+        path: StandardPaths.writableLocation(StandardPaths.GenericStateLocation) + "/quickshell-island-autohide"
+        watchChanges: true
+        blockLoading: true
+        printErrors: false
+        onFileChanged: this.reload()
+    }
+
     FileView {
         id: layoutFile
         path: StandardPaths.writableLocation(StandardPaths.GenericStateLocation) + "/quickshell-layout"
@@ -63,6 +79,7 @@ ShellRoot {
                 active: root.layout === "island"
                 sourceComponent: Island {
                     screen: screenScope.modelData
+                    autoHide: root.autoHide
                 }
             }
 
@@ -101,6 +118,7 @@ ShellRoot {
         function layout(name: string): void { root.setLayout(name); }
         function toggleLayout(): void       { root.setLayout(root.layout === "island" ? "bar" : "island"); }
         function toggleIsland(): void       { root.focusedIsland()?.toggle(); }
+        function toggleAutoHide(): void     { root.setAutoHide(!root.autoHide); }
         function openIsland(page: string): void { root.focusedIsland()?.open(page); }
         function osd(kind: string): void    { if (kind === "brightness") Brightness.notifyChanged(); }
         function battery(kind: string): void { Battery.alert(kind); }

@@ -9,6 +9,8 @@ MorphSurface {
 
     property string monitorName: ""
     property bool expanded: false
+    // Escondida arriba por el auto-ocultado: pausa lo que no se ve (cava).
+    property bool concealed: false
 
     property string moment: ""
     property string osdKind: "volume"
@@ -54,7 +56,7 @@ MorphSurface {
         id: momentTimer
         interval: root.momentDuration[root.moment] ?? 1500
         onTriggered: {
-            if (bodyHover.hovered && root.moment === "notif")
+            if (root.hovered && root.moment === "notif")
                 restart();
             else
                 root.moment = "";
@@ -106,8 +108,6 @@ MorphSurface {
 
     Keys.onEscapePressed: openView.back()
 
-    HoverHandler { id: bodyHover }
-
     TapHandler {
         enabled: !root.expanded
         onTapped: {
@@ -140,7 +140,7 @@ MorphSurface {
             monitorName: root.monitorName
             music: true
             opacity: root.shownMode === "music" ? 1 : 0
-            enabled: root.mode === "music"
+            enabled: root.mode === "music" && !root.concealed
             Reveal on opacity {}
             onExpandRequested: root.open("")
             onMediaRequested: root.open("media")

@@ -20,6 +20,7 @@ Item {
 
     property string revealedStage: ""
     readonly property bool revealed: revealedStage === stage
+    readonly property bool hovered: surfaceHover.hovered
 
     default property alias content: clipArea.data
 
@@ -32,6 +33,8 @@ Item {
     Behavior on shoulder { NumberAnimation { duration: 260; easing.type: Easing.OutCubic } }
 
     Component.onCompleted: revealedStage = stage
+
+    HoverHandler { id: surfaceHover }
 
     onStageChanged: {
         revealedStage = "";
